@@ -1,2 +1,2 @@
-# rositsa.homewoork
-rositsa.homewoork
+# rositsa.homework
+rositsa.homework
