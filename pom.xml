@@ -5,7 +5,7 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.1.RELEASE</version>
 	</parent>
-  
+   
 	<groupId>rositsa.homework</groupId>
 	<artifactId>rositsa.homework</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -15,5 +15,6 @@
 
 	<modules>
 		<module>rositsa.homework.rest</module>
+		<module>rositsa.homework.core</module>
 	</modules>
 </project>
