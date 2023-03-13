@@ -13,4 +13,7 @@
 	<name>Homework - Rositsa Georgieva</name>
 	<description>Homework - Rositsa Georgieva</description>
 
+	<modules>
+		<module>rositsa.homework.rest</module>
+	</modules>
 </project>

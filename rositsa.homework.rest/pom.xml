@@ -1,0 +1,14 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>rositsa.homework</groupId>
+		<artifactId>rositsa.homework</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>rositsa.homework.rest</groupId>
+	<artifactId>rositsa.homework.rest</artifactId>
+	<name>rositsa.homework.rest</name>
+	<description>rositsa.homework.rest</description>
+	
+	
+</project>
