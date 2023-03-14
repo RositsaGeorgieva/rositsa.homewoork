@@ -19,7 +19,7 @@ import rositsa.homework.dao.parking.GenericDAO;
  * Generic Hibernate DAO implementation.<br/>
  * 
  * @version $Id:$
- * @author inerty.com
+ * @author rosy@inerty.com
  * 
  * @since 1.0
  * @param <T>
@@ -50,9 +50,6 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
 		return persistentClass;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.partners1993.dao.GenericDAO#findById(java.io.Serializable, boolean)
-	 */
 	@SuppressWarnings("unchecdked")
 	public T findById(ID id, boolean lock) {
 		T entity;
@@ -64,17 +61,11 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
 		return entity;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.partners1993.dao.GenericDAO#findAll()
-	 */
 	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
 		return findByCriteria();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.partners1993.dao.GenericDAO#findByExample(java.lang.Object, java.lang.String[])
-	 */
 	@SuppressWarnings("unchecked")
 	public List<T> findByExample(T exampleInstance, String[] excludeProperty) {
 		Criteria crit = getSession().createCriteria(getPersistentClass());
@@ -86,27 +77,18 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
 		return crit.list();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.partners1993.dao.GenericDAO#findByExample(java.lang.Object)
-	 */
 	@SuppressWarnings("unchecked")
 	public List<T> findByExample(T exampleInstance) {
 		
 		return findByExample(exampleInstance, new String[0]);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.partners1993.dao.GenericDAO#makePersistent(java.lang.Object)
-	 */
 	@SuppressWarnings("unchecked")
 	public T makePersistent(T entity) {
 		getSession().saveOrUpdate(entity);
 		return entity;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.partners1993.dao.GenericDAO#makeTransient(java.lang.Object)
-	 */
 	public void makeTransient(T entity) {
 		getSession().delete(entity);
 	}
