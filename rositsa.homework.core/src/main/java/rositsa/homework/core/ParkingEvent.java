@@ -2,20 +2,47 @@ package rositsa.homework.core;
 
 import java.util.Date;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Proxy;
+
+
+@Entity
+@Table(name = "parkingevent")
+@Proxy(lazy = false)
 public class ParkingEvent {
 	
 	private static final String TYPE_BUS = "bus";
 	
 	private static final String TYPE_CAR = "car";
 	
+	/**unique number used to identify the {@link ParkingEvent}*/
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	/**unique name of the {@link ParkingEvent}*/
+	@Column(name = "plateNumber", length = 32)
 	private String plateNumber;
 	
+	/**unique name of the {@link ParkingEvent}*/
+	@Column(name = "type", length = 32)
 	private String type;
 	
+	@Basic
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date startTime;
 	
+	@Basic
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date endTime;
 
 	public Long getId() {

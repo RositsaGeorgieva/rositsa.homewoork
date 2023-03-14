@@ -1,6 +1,9 @@
 package rositsa.homework.dao.hibernate;
 
 import java.io.Serializable;
+import java.util.List;
+
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import rositsa.homework.core.ParkingEvent;
@@ -21,5 +24,10 @@ import rositsa.homework.dao.parking.ParkingEventDao;
 @Repository
 public class ParkingEventDaoImpl extends GenericHibernateDAO<ParkingEvent, Serializable> implements ParkingEventDao {
 
-	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ParkingEvent> findAll() {
+		Query query = getSession().createQuery("FROM ParkingEvent ORDER BY id DESC");
+		return query.list();
+	}
 }
