@@ -6,7 +6,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	
-	<groupId>rositsa.homework.dao</groupId>
+	<groupId>rositsa.homework</groupId>
 	<artifactId>rositsa.homework.dao</artifactId>
 	<name>rositsa.homework.dao</name>
 	<description>rositsa.homework.dao</description>

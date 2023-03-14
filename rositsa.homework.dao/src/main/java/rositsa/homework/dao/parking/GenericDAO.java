@@ -15,7 +15,7 @@ import java.io.Serializable;
  * state.
  *
  * @version $Id:$
- * @author inerty.com
+ * @author rosy@inerty.com
  * @since 1.0
  */
 public interface GenericDAO<T, PK extends Serializable> {

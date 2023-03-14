@@ -11,7 +11,7 @@ import rositsa.homework.core.ParkingEvent;
  * 
  * @version $ID:$
  * 
- * @author rosy@inerty.com
+ * @author rositsa
  * 
  * @since 1.0
  */

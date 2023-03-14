@@ -14,7 +14,7 @@ import rositsa.homework.dao.parking.ParkingEventDao;
  * 
  * @version $ID:$
  * 
- * @author rosy@inerty.com
+ * @author rositsa
  * 
  * @since 1.0
  */
