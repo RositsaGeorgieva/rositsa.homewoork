@@ -17,5 +17,6 @@
 		<module>rositsa.homework.rest</module>
 		<module>rositsa.homework.core</module>
 		<module>rositsa.homework.dao</module>
+		<module>rositsa.homework.service</module>
 	</modules>
 </project>
