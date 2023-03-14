@@ -5,7 +5,8 @@
 		<artifactId>rositsa.homework</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>rositsa.homework.rest</groupId>
+	
+	<groupId>rositsa.homework</groupId>
 	<artifactId>rositsa.homework.rest</artifactId>
 	<name>rositsa.homework.rest</name>
 	<description>rositsa.homework.rest</description>

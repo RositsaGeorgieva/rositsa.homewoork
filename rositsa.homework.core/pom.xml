@@ -5,9 +5,42 @@
 		<artifactId>rositsa.homework</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>rositsa.homework.core</groupId>
+	<groupId>rositsa.homework</groupId>
 	<artifactId>rositsa.homework.core</artifactId>
 	<name>rositsa.homework.core</name>
 	<description>rositsa.homework.core</description>
 	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.0.11.Final</version>
+        </dependency>
+	
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.6.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		
+	</dependencies>
 </project>
