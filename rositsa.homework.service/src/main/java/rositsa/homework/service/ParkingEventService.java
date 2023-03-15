@@ -17,23 +17,29 @@ import rositsa.homework.core.ParkingEvent;
  */
 public interface ParkingEventService {
 	
-	List<ParkingEvent> findAll();
+	public ParkingEvent get(Long id);
 	
-	ParkingEvent enterParking();
+	public ParkingEvent get(String plateNumber);
 	
-	ParkingEvent exitParking();
+	public void save(ParkingEvent parkingEvent);
+	
+	public List<ParkingEvent> findAll();
+	
+	public ParkingEvent enterParking();
+	
+	public ParkingEvent exitParking(); 
 	
 	/**
 	 * Find all occupied spots
 	 * @return
 	 */
-	List<ParkingEvent> findOccupied();
+	public List<ParkingEvent> findOccupied();
 	
 	/**
 	 * Find sales
 	 * @return
 	 */
-	List<ParkingEvent> findSales(Date date);
+	public List<ParkingEvent> findSales(Date date);
 
-	List<ParkingEvent> findAllSales();
+	public List<ParkingEvent> findAllSales();
 }

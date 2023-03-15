@@ -37,6 +37,19 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 	Date now = calendar.getTime();
 	
 	@Transactional
+	public ParkingEvent get(Long id) {
+		ParkingEvent parkingEvent = this.parkingEventDAO.findById(id, false);
+		return parkingEvent;
+	}
+	
+	
+	@Transactional
+	public ParkingEvent get(String plateNumber) {
+		ParkingEvent parkingEvent = this.parkingEventDAO.findByPlateNumber(plateNumber);
+		return parkingEvent;
+	}
+	
+	@Transactional
 	public List<ParkingEvent> findAll() {
 		return this.parkingEventDAO.findAll();
 	}
@@ -44,7 +57,6 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 	@Transactional
 	public void save(ParkingEvent parkingEvent) {
 		this.parkingEventDAO.makePersistent(parkingEvent);
-		
 	}
 
 	@Transactional
@@ -75,6 +87,4 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 }

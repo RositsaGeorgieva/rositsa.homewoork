@@ -5,6 +5,7 @@ import java.util.List;
 
 import rositsa.homework.core.ParkingEvent;
 import rositsa.homework.rest.Status.ResponseTypes;
+import rositsa.homework.rest.controller.parkingevent.BaseResponse;
 
 
 /**

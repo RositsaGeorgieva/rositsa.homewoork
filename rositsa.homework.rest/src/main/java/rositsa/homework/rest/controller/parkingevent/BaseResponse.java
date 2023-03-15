@@ -1,4 +1,4 @@
-package rositsa.homework.rest.controller.parkingevent.get;
+package rositsa.homework.rest.controller.parkingevent;
 
 import rositsa.homework.rest.Status;
 import rositsa.homework.rest.Status.ResponseTypes;
