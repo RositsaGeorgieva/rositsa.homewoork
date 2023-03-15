@@ -1,6 +1,7 @@
 package rositsa.homework.dao.hibernate;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -28,6 +29,13 @@ public class ParkingEventDaoImpl extends GenericHibernateDAO<ParkingEvent, Seria
 	@SuppressWarnings("unchecked")
 	public List<ParkingEvent> findAll() {
 		Query query = getSession().createQuery("FROM ParkingEvent ORDER BY id DESC");
+		return query.list();
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ParkingEvent> findOccupied() {
+		Query query = getSession().createQuery("FROM ParkingEvent WHERE endTime IS null ORDER BY id DESC");
 		return query.list();
 	}
 }

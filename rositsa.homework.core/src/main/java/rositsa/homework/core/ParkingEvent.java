@@ -30,11 +30,11 @@ public class ParkingEvent {
 	private Long id;
 	
 	/**unique name of the {@link ParkingEvent}*/
-	@Column(name = "plateNumber", length = 32)
+	@Column(name = "plateNumber")
 	private String plateNumber;
 	
 	/**unique name of the {@link ParkingEvent}*/
-	@Column(name = "type", length = 32)
+	@Column(name = "type")
 	private String type;
 	
 	@Basic
@@ -44,6 +44,12 @@ public class ParkingEvent {
 	@Basic
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endTime;
+	
+	@Column(name = "spentTime")
+	private int spentTime;
+	
+	@Column(name = "paidSumm")
+	private int paidSumm;
 
 	public Long getId() {
 		return id;
@@ -85,6 +91,24 @@ public class ParkingEvent {
 		this.endTime = endTime;
 	}
 	
+	
+	
+	public int getSpentTime() {
+		return spentTime;
+	}
+
+	public void setSpentTime(int spentTime) {
+		this.spentTime = spentTime;
+	}
+
+	public int getPaidSumm() {
+		return paidSumm;
+	}
+
+	public void setPaidSumm(int paidSumm) {
+		this.paidSumm = paidSumm;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

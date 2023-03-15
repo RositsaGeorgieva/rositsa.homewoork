@@ -9,6 +9,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 
+import rositsa.homework.service.ParkingEventService;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -23,13 +24,14 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 public class RestApplication {
 
-	private static final int PRICE_CAR_1H = 1;
-	private static final int PRICE_CAR_24H = 10;
-	private static final int PRICE_BUS_1H = 5;
-	private static final int PRICE_BUS_24H = 40;
-	private static final int BUS_SPOTS = 10;
-	private static final int CAR_SPOTS = 50;
+//	private static final int PRICE_CAR_1H = 1;
+//	private static final int PRICE_CAR_24H = 10;
+//	private static final int PRICE_BUS_1H = 5;
+//	private static final int PRICE_BUS_24H = 40;
+//	private static final int BUS_SPOTS = 10;
+//	private static final int CAR_SPOTS = 50;
 	
+	ParkingEventService parkingEventService;
 	
 	public static void main(String[] args) {
 

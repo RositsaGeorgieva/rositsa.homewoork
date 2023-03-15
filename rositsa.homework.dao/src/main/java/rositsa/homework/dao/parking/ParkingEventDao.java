@@ -1,6 +1,8 @@
 package rositsa.homework.dao.parking;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 import rositsa.homework.core.ParkingEvent;
 
@@ -16,6 +18,8 @@ import rositsa.homework.core.ParkingEvent;
  * @since 1.0
  */
 public interface ParkingEventDao extends GenericDAO<ParkingEvent, Serializable> {
+
+	List<ParkingEvent> findOccupied();
 
 
 }

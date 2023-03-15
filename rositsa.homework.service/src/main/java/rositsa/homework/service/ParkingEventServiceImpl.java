@@ -1,5 +1,7 @@
 package rositsa.homework.service;
 
+import java.time.LocalTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,8 +21,20 @@ import rositsa.homework.dao.parking.ParkingEventDao;
 @Service
 public class ParkingEventServiceImpl implements ParkingEventService {
 
+	
+	private static final int PRICE_CAR_1H = 1;
+	private static final int PRICE_CAR_24H = 10;
+	private static final int PRICE_BUS_1H = 5;
+	private static final int PRICE_BUS_24H = 40;
+	private static final int BUS_SPOTS = 10;
+	private static final int CAR_SPOTS = 50;
+	
 	@Autowired
 	protected ParkingEventDao parkingEventDAO;
+	
+	Calendar calendar = Calendar.getInstance();
+	
+	Date now = calendar.getTime();
 	
 	@Transactional
 	public List<ParkingEvent> findAll() {
@@ -33,10 +47,9 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 		
 	}
 
-	@Override
+	@Transactional
 	public List<ParkingEvent> findOccupied() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.parkingEventDAO.findOccupied();
 	}
 
 	@Override

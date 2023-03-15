@@ -1,6 +1,7 @@
 package rositsa.homework.rest;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
@@ -38,26 +39,11 @@ public class ParkingEventController {
 	/** Logger */
 	private static final Logger logger = LogManager.getLogger(ParkingEventController.class);
 	
-	/**
-	 * This API is called to create a user.
-	 * 
-	 * @param body
-	 * 			Request CreateUserBody {@link CreateUserBody}
-	 * 
-	 * @return
-	 * 			{@link CreateResponse} as JSON
-	 * 
-	 * @throws BaseRestException 
-	 * 
-	 * @version $Id:$
-	 * @author rosy@inerty.com
-	 * @since 1.0
-	 */
 	@Autowired
 	private ParkingEventService parkingEventService;
 	
 	
-	@ApiOperation(value = "get", nickname = "get", notes= "Get parking events")
+	@ApiOperation(value = "get", nickname = "get", notes= "Get all parking events")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
 	@RequestMapping(method = RequestMethod.GET, path="/list",  produces = "application/json")
 	public @ResponseBody ListParkingEventsResponse list() {
@@ -70,6 +56,25 @@ public class ParkingEventController {
 		
 		
 		parkingEvents.addAll(parkingEventService.findAll());
+		
+		response.setParkingEvents(parkingEvents);
+		
+		return response;
+	}
+	
+	@ApiOperation(value = "get", nickname = "get", notes= "Get occupied spots")
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
+	@RequestMapping(method = RequestMethod.GET, path="/findOccupied",  produces = "application/json")
+	public @ResponseBody ListParkingEventsResponse listOccupied() {
+		
+		logger.info("Get occupied spots");
+		
+		ListParkingEventsResponse response = new ListParkingEventsResponse();
+		
+		List<ParkingEvent> parkingEvents = new ArrayList<ParkingEvent>();
+		
+		
+		parkingEvents.addAll(parkingEventService.findOccupied());
 		
 		response.setParkingEvents(parkingEvents);
 		
