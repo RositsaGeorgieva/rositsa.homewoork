@@ -22,6 +22,10 @@ public interface ParkingEventDao extends GenericDAO<ParkingEvent, Serializable> 
 	ParkingEvent findByPlateNumber(String plateNumber);
 	
 	List<ParkingEvent> findOccupied();
+	
+	List<ParkingEvent> findOccupiedCarSpots();
+	
+	List<ParkingEvent> findOccupiedBusSpots();
 
 
 }

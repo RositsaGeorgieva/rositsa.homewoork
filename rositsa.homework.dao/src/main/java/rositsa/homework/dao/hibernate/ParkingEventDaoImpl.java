@@ -45,5 +45,17 @@ public class ParkingEventDaoImpl extends GenericHibernateDAO<ParkingEvent, Seria
 		query.setParameter("plateNumber", plateNumber);
 		return (ParkingEvent) query.uniqueResult();
 	}
+
+	@Override
+	public List<ParkingEvent> findOccupiedCarSpots() {
+		Query query = getSession().createQuery("FROM ParkingEvent WHERE endTime IS null AND type like 'CAR' ORDER BY id DESC");
+		return query.list();
+	}
+
+	@Override
+	public List<ParkingEvent> findOccupiedBusSpots() {
+		Query query = getSession().createQuery("FROM ParkingEvent WHERE endTime IS null AND type like 'BUS' ORDER BY id DESC");
+		return query.list();
+	}
 	
 }

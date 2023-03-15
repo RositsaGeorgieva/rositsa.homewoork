@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +22,14 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import rositsa.homework.core.ParkingEvent;
+import rositsa.homework.rest.Status.ResponseTypes;
 import rositsa.homework.rest.controller.parkingevent.BaseRestException;
 import rositsa.homework.rest.controller.parkingevent.create.CreateParkingEventBody;
 import rositsa.homework.rest.controller.parkingevent.create.CreateResponse;
+import rositsa.homework.rest.controller.parkingevent.create.UpdateParkingEventBody;
+import rositsa.homework.rest.controller.parkingevent.create.UpdateResponse;
 import rositsa.homework.rest.controller.parkingevent.get.ListParkingEventsResponse;
+import rositsa.homework.service.FullParkingException;
 import rositsa.homework.service.ParkingEventService;
 
 /**
@@ -89,6 +94,7 @@ public class ParkingEventController {
 		
 		return response;
 	}
+	
 	@ApiOperation(value = "get", nickname = "get", notes= "Get Number of occupied spots")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
 	@RequestMapping(method = RequestMethod.GET, path="/numberOfOccupiedSpots",  produces = "application/json")
@@ -99,30 +105,42 @@ public class ParkingEventController {
 		return parkingEventService.findOccupied().size();
 	}
 	
+	@ApiOperation(value = "get", nickname = "get", notes= "Get Number of occupied CAR spots")
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
+	@RequestMapping(method = RequestMethod.GET, path="/findOccupiedCarSpots",  produces = "application/json")
+	public @ResponseBody int findOccupiedCarSpots() {
+		
+		logger.info("findOccupiedCarSpots");
+		
+		return ParkingEventService.CAR_SPOTS - parkingEventService.findFreeCarSpots();
+	}
+	
+	@ApiOperation(value = "get", nickname = "get", notes= "Get Number of occupied BUS spots")
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
+	@RequestMapping(method = RequestMethod.GET, path="/findOccupiedBusSpots",  produces = "application/json")
+	public @ResponseBody int findOccupiedBusSpots() {
+		
+		logger.info("findOccupiedBusSpots");
+		
+		return ParkingEventService.BUS_SPOTS - parkingEventService.findFreeBusSpots();
+	}
 	
 	@ApiOperation(value = "create", nickname = "create", notes= "Create parking event")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = CreateResponse.class)})
-	@RequestMapping(method = RequestMethod.POST, path="/", produces = "application/json")
-	public @ResponseBody CreateResponse create(@RequestBody CreateParkingEventBody body) throws BaseRestException {
+	@RequestMapping(method = RequestMethod.POST, path="/type/{type}/plateNumber/{plateNumber}", produces = "application/json")
+	public @ResponseBody CreateResponse create(@PathVariable("type") String type, @PathVariable("plateNumber") String plateNumber) throws FullParkingException {
 
-		logger.info("Create parking event: " + body);
+		logger.info("Create parking event: " + plateNumber + ". Type " + type);
 		
 		ParkingEvent parkingEvent = new ParkingEvent();
 		
-		parkingEvent.setPlateNumber(body.getPlateNumber());
-		parkingEvent.setType(body.getType());
-		parkingEvent.setStartTime(now);
+		parkingEvent.setPlateNumber(plateNumber);
+		parkingEvent.setType(type);
 		
-		try {
-			parkingEventService.save(parkingEvent);
+			parkingEventService.enterParking(plateNumber, type);
 			logger.info("Parking event created successfully: " + parkingEvent);
-		} catch(Exception e) {
-			logger.error("Cannot create parking event from: " + body);
-			logger.error(e.getMessage());
-			throw new BaseRestException("Error: " + e.getMessage(), "500");
-		}
 		
-		CreateResponse response = new CreateResponse(body.getPlateNumber());
+		CreateResponse response = new CreateResponse(plateNumber);
 		
 		return response;
 	}
@@ -137,7 +155,7 @@ public class ParkingEventController {
 	@ApiOperation(value = "update", nickname = "update", notes= "Update parking event with endDate")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = CreateResponse.class)})
 	@RequestMapping(method = RequestMethod.POST, path="/{id}", produces = "application/json")
-	public @ResponseBody CreateResponse update(@PathVariable("id") Long id, @RequestBody CreateParkingEventBody body) throws BaseRestException {
+	public @ResponseBody UpdateResponse update(@PathVariable("id") Long id, @RequestBody UpdateParkingEventBody body) throws BaseRestException {
 
 		logger.info("Update parking event [id=" + id + "]");
 		ParkingEvent parkingEvent = parkingEventService.get(id);
@@ -146,7 +164,7 @@ public class ParkingEventController {
 		
 		parkingEventService.save(parkingEvent);
 	
-		return new CreateResponse(body.getPlateNumber());
+		return new UpdateResponse(body.getPlateNumber());
 	}
 	
 	
@@ -161,6 +179,14 @@ public class ParkingEventController {
 	public void setParkingEventService(ParkingEventService parkingEventService) {
 		this.parkingEventService = parkingEventService;
 	}
-
 	
+	@ExceptionHandler({FullParkingException.class})
+	public @ResponseBody Status error(FullParkingException e) {
+		Status status = new Status();
+		status.setCode("406");
+		status.setMessage(e.getMessage());
+		status.setType(ResponseTypes.ERROR);
+		return status;
+	}
 }
+	

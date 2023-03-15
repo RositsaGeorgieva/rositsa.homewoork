@@ -21,34 +21,27 @@ import rositsa.homework.dao.parking.ParkingEventDao;
 @Service
 public class ParkingEventServiceImpl implements ParkingEventService {
 
-	
-	private static final int PRICE_CAR_1H = 1;
-	private static final int PRICE_CAR_24H = 10;
-	private static final int PRICE_BUS_1H = 5;
-	private static final int PRICE_BUS_24H = 40;
-	private static final int BUS_SPOTS = 10;
-	private static final int CAR_SPOTS = 50;
-	
+
 	@Autowired
 	protected ParkingEventDao parkingEventDAO;
-	
+
 	Calendar calendar = Calendar.getInstance();
-	
+
 	Date now = calendar.getTime();
-	
+
 	@Transactional
 	public ParkingEvent get(Long id) {
 		ParkingEvent parkingEvent = this.parkingEventDAO.findById(id, false);
 		return parkingEvent;
 	}
-	
-	
+
+
 	@Transactional
 	public ParkingEvent get(String plateNumber) {
 		ParkingEvent parkingEvent = this.parkingEventDAO.findByPlateNumber(plateNumber);
 		return parkingEvent;
 	}
-	
+
 	@Transactional
 	public List<ParkingEvent> findAll() {
 		return this.parkingEventDAO.findAll();
@@ -64,14 +57,43 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 		return this.parkingEventDAO.findOccupied();
 	}
 
-	@Override
-	public ParkingEvent enterParking() {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public ParkingEvent enterParking(String plateNumber, String type) throws FullParkingException {
+
+		if (ParkingEvent.TYPE_CAR.equalsIgnoreCase(type)) {
+			int findOccupiedCarSpots =  this.parkingEventDAO.findOccupiedCarSpots().size();
+			if (CAR_SPOTS > findOccupiedCarSpots) {
+				ParkingEvent parkingEvent = new ParkingEvent();
+				parkingEvent.setPlateNumber(plateNumber);
+				parkingEvent.setType(type);
+				parkingEvent.setStartTime(now);
+				this.save(parkingEvent);
+				return parkingEvent;
+			} else {
+				throw new FullParkingException("Parking is full. The capacity for cars is " + CAR_SPOTS + ".");
+			}
+		}
+
+		if (ParkingEvent.TYPE_BUS.equalsIgnoreCase(type)) {
+			int findOccupiedBusSpots =  this.parkingEventDAO.findOccupiedBusSpots().size();;
+			if (BUS_SPOTS > findOccupiedBusSpots) {
+				ParkingEvent parkingEvent = new ParkingEvent();
+				parkingEvent.setPlateNumber(plateNumber);
+				parkingEvent.setType(type);
+				parkingEvent.setStartTime(now);
+				this.save(parkingEvent);
+				return parkingEvent;
+			} else {
+				throw new FullParkingException("Parking is full. The capacity for busses is " + BUS_SPOTS + ".");
+			}
+		}
+		
+		throw new IllegalArgumentException("The parking is not for " + type + ".");
+
 	}
 
-	@Override
-	public ParkingEvent exitParking() {
+	@Transactional
+	public ParkingEvent exitParking(ParkingEvent parkingEvent) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -86,5 +108,19 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 	public List<ParkingEvent> findAllSales() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Transactional
+	public int findFreeCarSpots() {
+		int size = this.parkingEventDAO.findOccupiedCarSpots().size();
+		return CAR_SPOTS - size;
+	}
+
+
+	@Transactional
+	public int findFreeBusSpots() {
+		int size = this.parkingEventDAO.findOccupiedBusSpots().size();
+		return BUS_SPOTS - size;
 	}
 }
