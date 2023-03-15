@@ -1,5 +1,8 @@
 package rositsa.homework.rest;
 
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -32,6 +35,12 @@ public class RestApplication {
 
 		ConfigurableApplicationContext context = SpringApplication.run(RestApplication.class, args);
 		
+		
+		System.out.println("REST API documentation and REST HTML client are available on:");
+		System.out.println("\thttp://localhost:8080/swagger-ui.html");
+		
 	}
+	
+	
 
 }
