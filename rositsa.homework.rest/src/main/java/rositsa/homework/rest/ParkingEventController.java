@@ -80,6 +80,17 @@ public class ParkingEventController {
 		
 		return response;
 	}
+	@ApiOperation(value = "get", nickname = "get", notes= "Get Number of occupied spots")
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
+	@RequestMapping(method = RequestMethod.GET, path="/numberOfOccupiedSpots",  produces = "application/json")
+	public @ResponseBody int numberOfOccupiedSpots() {
+		
+		logger.info("numberOfOccupiedSpots");
+		
+		int size = parkingEventService.findOccupied().size();
+		
+		return size;
+	}
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
