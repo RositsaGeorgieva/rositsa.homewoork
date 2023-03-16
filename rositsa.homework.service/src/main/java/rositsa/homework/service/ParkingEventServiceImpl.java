@@ -100,24 +100,20 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 		parkingEvent.setEndTime(now);
 		
 
-		long millisSpentTime = parkingEvent.getEndTime().getTime() - parkingEvent.getStartTime().getTime();
-		
-		float spentMinutes = millisSpentTime / (1000*60);
 		
 		
-		System.out.println("spent time in minutes: " + spentMinutes);
-		System.out.println("spent time in hours: " + spentMinutes / 60);
-		
-		double roundHours = Math.ceil(spentMinutes / 60);
-		
-		System.out.println("spent time in round hours: " + roundHours);
-		parkingEvent.setSpentTime(roundHours);
-		
+		PaymentStrategy paymentStrategy = null;
 		if (ParkingEvent.TYPE_CAR.equalsIgnoreCase(parkingEvent.getType())) {
-			parkingEvent.setPaidSumm(roundHours * ParkingEventService.PRICE_CAR_1H);
-		} else if (10.0 <= roundHours &&  roundHours <= 24.0) {
-			parkingEvent.setPaidSumm(ParkingEventService.PRICE_CAR_24H);
+			Payment carPayment = new CarPayment();
+			paymentStrategy = new PaymentStrategy(carPayment);
+		} else if (ParkingEvent.TYPE_BUS.equalsIgnoreCase(parkingEvent.getType())) {
+			
+			Payment busPayment = new BusPayment();
+			paymentStrategy = new PaymentStrategy(busPayment);
 		}
+		
+		double calculcate = paymentStrategy.calculcate(parkingEvent.getSpentTime());
+		parkingEvent.setPaidSumm(calculcate);
 		
 		this.save(parkingEvent);
 		return parkingEvent;

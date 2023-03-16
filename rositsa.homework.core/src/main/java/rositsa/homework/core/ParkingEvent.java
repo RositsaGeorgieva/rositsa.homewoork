@@ -46,7 +46,7 @@ public class ParkingEvent {
 	private Date endTime;
 	
 	@Column(name = "spentTime")
-	private double spentTime;
+	private long spentTime;
 	
 	@Column(name = "paidSumm")
 	private double paidSumm;
@@ -89,13 +89,21 @@ public class ParkingEvent {
 
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
+		
+		long millisSpentTime = this.endTime.getTime() - this.startTime.getTime();
+		
+		float spentMinutes = millisSpentTime / (1000*60);
+		
+		long roundHours = (long)Math.ceil(spentMinutes / 60);
+		this.spentTime = roundHours;
+		
 	}
 
-	public double getSpentTime() {
+	public long getSpentTime() {
 		return spentTime;
 	}
 
-	public void setSpentTime(double spentTime) {
+	public void setSpentTime(long spentTime) {
 		this.spentTime = spentTime;
 	}
 
