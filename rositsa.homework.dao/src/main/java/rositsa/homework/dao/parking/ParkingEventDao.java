@@ -19,12 +19,33 @@ import rositsa.homework.core.ParkingEvent;
  */
 public interface ParkingEventDao extends GenericDAO<ParkingEvent, Serializable> {
 
+	/**
+	 * 
+	 * @param plateNumber
+	 *
+	 * @return last parking event for this number
+	 */
 	ParkingEvent findByPlateNumber(String plateNumber);
 	
+	/**
+	 * @param plateNumber
+	 * @return
+	 */
+	ParkingEvent findEnteredByPlateNumber(String plateNumber);
+	
+	/**
+	 * @return list of all occupied spots in the parking
+	 */
 	List<ParkingEvent> findOccupied();
 	
+	/**
+	 * @return list of occupied by cars spots in the parking
+	 */
 	List<ParkingEvent> findOccupiedCarSpots();
 	
+	/**
+	 * @return list of occupied by busses spots in the parking
+	 */
 	List<ParkingEvent> findOccupiedBusSpots();
 
 

@@ -125,6 +125,12 @@ public class ParkingEventController {
 		return ParkingEventService.BUS_SPOTS - parkingEventService.findFreeBusSpots();
 	}
 	
+	/**
+	 * @param type
+	 * @param plateNumber
+	 * @return
+	 * @throws FullParkingException
+	 */
 	@ApiOperation(value = "create", nickname = "create", notes= "Create parking event")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = CreateResponse.class)})
 	@RequestMapping(method = RequestMethod.POST, path="/type/{type}/plateNumber/{plateNumber}", produces = "application/json")
@@ -137,8 +143,8 @@ public class ParkingEventController {
 		parkingEvent.setPlateNumber(plateNumber);
 		parkingEvent.setType(type);
 		
-			parkingEventService.enterParking(plateNumber, type);
-			logger.info("Parking event created successfully: " + parkingEvent);
+		parkingEventService.enterParking(plateNumber, type);
+		logger.info("Parking event created successfully: " + parkingEvent);
 		
 		CreateResponse response = new CreateResponse(plateNumber);
 		
@@ -147,24 +153,22 @@ public class ParkingEventController {
 	
 	
 	/**
-	 * @param id
-	 * @param body
+	 * @param plateNumber
 	 * @return
 	 * @throws BaseRestException
 	 */
 	@ApiOperation(value = "update", nickname = "update", notes= "Update parking event with endDate")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = CreateResponse.class)})
-	@RequestMapping(method = RequestMethod.POST, path="/{id}", produces = "application/json")
-	public @ResponseBody UpdateResponse update(@PathVariable("id") Long id, @RequestBody UpdateParkingEventBody body) throws BaseRestException {
+	@RequestMapping(method = RequestMethod.PUT, path="/plateNumber/{plateNumber}", produces = "application/json")
+	public @ResponseBody UpdateResponse update(@PathVariable("plateNumber") String plateNumber) throws BaseRestException {
 
-		logger.info("Update parking event [id=" + id + "]");
-		ParkingEvent parkingEvent = parkingEventService.get(id);
+		logger.info("Update parking event [plateNumber=" + plateNumber + "]");
 		
-		parkingEvent.setEndTime(now);
+		ParkingEvent parkingEvent = parkingEventService.get(plateNumber);
 		
-		parkingEventService.save(parkingEvent);
-	
-		return new UpdateResponse(body.getPlateNumber());
+		parkingEventService.exitParking(plateNumber);
+		
+		return new UpdateResponse(parkingEvent.getPlateNumber());
 	}
 	
 	

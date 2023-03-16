@@ -25,6 +25,10 @@ public interface ParkingEventService {
 	public static final int BUS_SPOTS = 10;
 	public static final int CAR_SPOTS = 50;
 	
+	/**
+	 * @param id
+	 * @return
+	 */
 	public ParkingEvent get(Long id);
 	
 	public ParkingEvent get(String plateNumber);
@@ -35,15 +39,17 @@ public interface ParkingEventService {
 	
 	public ParkingEvent enterParking(String plateNumber, String type) throws FullParkingException;
 	
-	public ParkingEvent exitParking(ParkingEvent parkingEvent); 
+	public ParkingEvent exitParking(String plateNumber); 
 	
 	/**
 	 * Find all occupied spots
 	 * @return
 	 */
+	
 	public List<ParkingEvent> findOccupied();
 	
 	public int findFreeCarSpots();
+	
 	public int findFreeBusSpots();
 	
 	/**

@@ -1,5 +1,6 @@
 package rositsa.homework.service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -93,9 +94,33 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 	}
 
 	@Transactional
-	public ParkingEvent exitParking(ParkingEvent parkingEvent) {
-		// TODO Auto-generated method stub
-		return null;
+	public ParkingEvent exitParking(String plateNumber) {
+		
+		ParkingEvent parkingEvent = this.parkingEventDAO.findByPlateNumber(plateNumber);
+		parkingEvent.setEndTime(now);
+		
+
+		long millisSpentTime = parkingEvent.getEndTime().getTime() - parkingEvent.getStartTime().getTime();
+		
+		float spentMinutes = millisSpentTime / (1000*60);
+		
+		
+		System.out.println("spent time in minutes: " + spentMinutes);
+		System.out.println("spent time in hours: " + spentMinutes / 60);
+		
+		double roundHours = Math.ceil(spentMinutes / 60);
+		
+		System.out.println("spent time in round hours: " + roundHours);
+		parkingEvent.setSpentTime(roundHours);
+		
+		if (ParkingEvent.TYPE_CAR.equalsIgnoreCase(parkingEvent.getType())) {
+			parkingEvent.setPaidSumm(roundHours * ParkingEventService.PRICE_CAR_1H);
+		} else if (10.0 <= roundHours &&  roundHours <= 24.0) {
+			parkingEvent.setPaidSumm(ParkingEventService.PRICE_CAR_24H);
+		}
+		
+		this.save(parkingEvent);
+		return parkingEvent;
 	}
 
 	@Override
@@ -123,4 +148,5 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 		int size = this.parkingEventDAO.findOccupiedBusSpots().size();
 		return BUS_SPOTS - size;
 	}
+
 }

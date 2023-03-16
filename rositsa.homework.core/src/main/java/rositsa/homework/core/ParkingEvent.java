@@ -46,10 +46,10 @@ public class ParkingEvent {
 	private Date endTime;
 	
 	@Column(name = "spentTime")
-	private int spentTime;
+	private double spentTime;
 	
 	@Column(name = "paidSumm")
-	private int paidSumm;
+	private double paidSumm;
 
 	public Long getId() {
 		return id;
@@ -90,22 +90,20 @@ public class ParkingEvent {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-	
-	
-	
-	public int getSpentTime() {
+
+	public double getSpentTime() {
 		return spentTime;
 	}
 
-	public void setSpentTime(int spentTime) {
+	public void setSpentTime(double spentTime) {
 		this.spentTime = spentTime;
 	}
 
-	public int getPaidSumm() {
+	public double getPaidSumm() {
 		return paidSumm;
 	}
 
-	public void setPaidSumm(int paidSumm) {
+	public void setPaidSumm(double paidSumm) {
 		this.paidSumm = paidSumm;
 	}
 
