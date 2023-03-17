@@ -22,18 +22,14 @@ import rositsa.homework.dao.parking.ParkingEventDao;
 @Service
 public class ParkingEventServiceImpl implements ParkingEventService {
 
-
 	@Autowired
 	protected ParkingEventDao parkingEventDAO;
-
-	
 
 	@Transactional
 	public ParkingEvent get(Long id) {
 		ParkingEvent parkingEvent = this.parkingEventDAO.findById(id, false);
 		return parkingEvent;
 	}
-
 
 	@Transactional
 	public ParkingEvent get(String plateNumber) {
@@ -97,9 +93,6 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 		ParkingEvent parkingEvent = this.parkingEventDAO.findByPlateNumber(plateNumber);
 		parkingEvent.setEndTime(new Date());
 		
-
-		
-		
 		PaymentStrategy paymentStrategy = null;
 		if (ParkingEvent.TYPE_CAR.equalsIgnoreCase(parkingEvent.getType())) {
 			Payment carPayment = new CarPayment();
@@ -129,7 +122,6 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 		int size = this.parkingEventDAO.findOccupiedBusSpots().size();
 		return BUS_SPOTS - size;
 	}
-
 
 	@Transactional
 	public List<ParkingEvent> findByDate(Date start) {

@@ -34,21 +34,26 @@ public interface ParkingEventDao extends GenericDAO<ParkingEvent, Serializable> 
 	ParkingEvent findEnteredByPlateNumber(String plateNumber);
 	
 	/**
-	 * @return list of all occupied spots in the parking
+	 * @return list of all occupied spots in the parking NOW
 	 */
 	List<ParkingEvent> findOccupied();
 	
 	/**
-	 * @return list of occupied by cars spots in the parking
+	 * @return list of occupied by cars spots in the parking NOW
 	 */
 	List<ParkingEvent> findOccupiedCarSpots();
 	
 	/**
-	 * @return list of occupied by busses spots in the parking
+	 * @return list of occupied by busses spots in the parking NOW
 	 */
 	List<ParkingEvent> findOccupiedBusSpots();
 	
-	List<ParkingEvent> findByDate(Date dateIn, Date dateOut);
+	/**
+	 * @param start - start of the day
+	 * @param end - end of the day
+	 * @return
+	 */
+	List<ParkingEvent> findByDate(Date start, Date end);
 
 
 }

@@ -74,7 +74,7 @@ public class ParkingEventDaoImpl extends GenericHibernateDAO<ParkingEvent, Seria
 	 */
 	@Override
 	public List<ParkingEvent> findByDate(Date start, Date end) {
-		Query query = getSession().createQuery("FROM ParkingEvent WHERE startTime <= :end AND (endTime >= :start OR endTime IS null) ORDER BY id DESC");
+		Query query = getSession().createQuery("FROM ParkingEvent WHERE startTime < :end AND (endTime >= :start OR endTime IS null) ORDER BY id DESC");
 		query.setParameter("end", end);
 		query.setParameter("start", start);
 		return query.list();

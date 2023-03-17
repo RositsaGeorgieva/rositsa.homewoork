@@ -27,9 +27,7 @@ import io.swagger.annotations.ApiResponses;
 import rositsa.homework.core.ParkingEvent;
 import rositsa.homework.rest.Status.ResponseTypes;
 import rositsa.homework.rest.controller.parkingevent.BaseRestException;
-import rositsa.homework.rest.controller.parkingevent.create.CreateParkingEventBody;
 import rositsa.homework.rest.controller.parkingevent.create.CreateResponse;
-import rositsa.homework.rest.controller.parkingevent.create.UpdateParkingEventBody;
 import rositsa.homework.rest.controller.parkingevent.create.UpdateResponse;
 import rositsa.homework.rest.controller.parkingevent.get.ListParkingEventsResponse;
 import rositsa.homework.service.FullParkingException;
@@ -41,7 +39,7 @@ import rositsa.homework.service.ParkingEventService;
  * 
  *
  * @version $Id:$
- * @author rosy@inerty.com
+ * @author rositsa
  * @since 1.0
  *
  */
@@ -56,7 +54,6 @@ public class ParkingEventController {
 	@Autowired
 	private ParkingEventService parkingEventService;
 	
-	
 	@ApiOperation(value = "List all parking events", nickname = "getAll", notes= "Get all parking events")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
 	@RequestMapping(method = RequestMethod.GET, path="/list",  produces = "application/json")
@@ -67,7 +64,6 @@ public class ParkingEventController {
 		ListParkingEventsResponse response = new ListParkingEventsResponse();
 		
 		List<ParkingEvent> parkingEvents = new ArrayList<ParkingEvent>();
-		
 		
 		parkingEvents.addAll(parkingEventService.findAll());
 		
@@ -86,7 +82,6 @@ public class ParkingEventController {
 		ListParkingEventsResponse response = new ListParkingEventsResponse();
 		
 		List<ParkingEvent> parkingEvents = new ArrayList<ParkingEvent>();
-		
 		
 		parkingEvents.addAll(parkingEventService.findOccupied());
 		
@@ -110,7 +105,6 @@ public class ParkingEventController {
 		List<ParkingEvent> parkingEvents = parkingEventService.findByDate(parseDate);
 		
 		ListParkingEventsResponse response = new ListParkingEventsResponse();
-		
 		
 		response.setParkingEvents(parkingEvents);
 		
@@ -163,6 +157,7 @@ public class ParkingEventController {
 		ParkingEvent parkingEvent = new ParkingEvent();
 		
 		parkingEvent.setPlateNumber(plateNumber);
+		
 		parkingEvent.setType(type);
 		
 		parkingEventService.enterParking(plateNumber, type);
@@ -173,7 +168,6 @@ public class ParkingEventController {
 		
 		return response;
 	}
-	
 	
 	/**
 	 * @param plateNumber
@@ -193,7 +187,6 @@ public class ParkingEventController {
 		
 		return new UpdateResponse(parkingEvent.getPlateNumber());
 	}
-	
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
