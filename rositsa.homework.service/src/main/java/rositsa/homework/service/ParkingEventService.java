@@ -52,13 +52,5 @@ public interface ParkingEventService {
 	
 	public int findFreeBusSpots();
 	
-	/**
-	 * Find sales
-	 * @return
-	 */
-	public List<ParkingEvent> findSales(Date date);
-
-	public List<ParkingEvent> findAllSales();
-	
 	public List<ParkingEvent> findByDate(Date date);
 }

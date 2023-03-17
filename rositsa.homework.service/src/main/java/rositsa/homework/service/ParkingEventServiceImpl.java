@@ -26,9 +26,7 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 	@Autowired
 	protected ParkingEventDao parkingEventDAO;
 
-	Calendar calendar = Calendar.getInstance();
-
-	Date now = calendar.getTime();
+	
 
 	@Transactional
 	public ParkingEvent get(Long id) {
@@ -67,7 +65,7 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 				ParkingEvent parkingEvent = new ParkingEvent();
 				parkingEvent.setPlateNumber(plateNumber);
 				parkingEvent.setType(type);
-				parkingEvent.setStartTime(now);
+				parkingEvent.setStartTime(new Date());
 				this.save(parkingEvent);
 				return parkingEvent;
 			} else {
@@ -81,7 +79,7 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 				ParkingEvent parkingEvent = new ParkingEvent();
 				parkingEvent.setPlateNumber(plateNumber);
 				parkingEvent.setType(type);
-				parkingEvent.setStartTime(now);
+				parkingEvent.setStartTime(new Date());
 				this.save(parkingEvent);
 				return parkingEvent;
 			} else {
@@ -97,7 +95,7 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 	public ParkingEvent exitParking(String plateNumber) {
 		
 		ParkingEvent parkingEvent = this.parkingEventDAO.findByPlateNumber(plateNumber);
-		parkingEvent.setEndTime(now);
+		parkingEvent.setEndTime(new Date());
 		
 
 		
@@ -119,19 +117,6 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 		return parkingEvent;
 	}
 
-	@Override
-	public List<ParkingEvent> findSales(Date date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ParkingEvent> findAllSales() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	@Transactional
 	public int findFreeCarSpots() {
 		int size = this.parkingEventDAO.findOccupiedCarSpots().size();
@@ -146,10 +131,18 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 	}
 
 
-	@Override
-	public List<ParkingEvent> findByDate(Date date) {
-		//todo
-		return null;
+	@Transactional
+	public List<ParkingEvent> findByDate(Date start) {
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(start);
+		cal.add(Calendar.HOUR, 24);
+		Date end = cal.getTime();
+		
+		System.out.println("date 00h: " + start);
+		System.out.println("date 24h: " + end);
+		
+		return this.parkingEventDAO.findByDate(start, end);
 	}
 
 }
