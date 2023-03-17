@@ -33,12 +33,9 @@ import rositsa.homework.service.ParkingEventService;
 
 /**
  * 
- * ParkingEventController<br/>
+ * ParkingEventController
  * 
- *
- * @version $Id:$
  * @author rositsa
- * @since 1.0
  *
  */
 @Controller
@@ -119,6 +116,7 @@ public class ParkingEventController {
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		Date parseDate = sf.parse(date);
+		
 		System.out.println("date is: " + parseDate);
 		
 		List<ParkingEvent> parkingEvents = parkingEventService.findByDate(parseDate);
