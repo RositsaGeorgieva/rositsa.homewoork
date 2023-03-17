@@ -59,4 +59,6 @@ public interface ParkingEventService {
 	public List<ParkingEvent> findSales(Date date);
 
 	public List<ParkingEvent> findAllSales();
+	
+	public List<ParkingEvent> findByDate(Date date);
 }

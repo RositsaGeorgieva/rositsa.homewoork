@@ -145,4 +145,11 @@ public class ParkingEventServiceImpl implements ParkingEventService {
 		return BUS_SPOTS - size;
 	}
 
+
+	@Override
+	public List<ParkingEvent> findByDate(Date date) {
+		//todo
+		return null;
+	}
+
 }

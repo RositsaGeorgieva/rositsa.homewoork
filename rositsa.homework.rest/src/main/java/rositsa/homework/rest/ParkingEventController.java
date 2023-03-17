@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import rositsa.homework.core.ParkingEvent;
@@ -89,6 +90,23 @@ public class ParkingEventController {
 		
 		
 		parkingEvents.addAll(parkingEventService.findOccupied());
+		
+		response.setParkingEvents(parkingEvents);
+		
+		return response;
+	}
+	
+	@ApiOperation(value = "findByDate", nickname = "findByDate", notes= "Get parked vehicles by date")
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
+	@RequestMapping(method = RequestMethod.GET, path="/finByDate/{date}",  produces = "application/json")
+	public @ResponseBody ListParkingEventsResponse findByDate(@PathVariable("date") @ApiParam(name = "date", value = "2023-03-15", required = true) String date) {
+		
+		logger.info("Get parked vehicle by date " + date);
+		
+		ListParkingEventsResponse response = new ListParkingEventsResponse();
+		
+		List<ParkingEvent> parkingEvents = new ArrayList<ParkingEvent>();
+		
 		
 		response.setParkingEvents(parkingEvents);
 		

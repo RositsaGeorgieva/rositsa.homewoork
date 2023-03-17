@@ -47,6 +47,8 @@ public interface ParkingEventDao extends GenericDAO<ParkingEvent, Serializable> 
 	 * @return list of occupied by busses spots in the parking
 	 */
 	List<ParkingEvent> findOccupiedBusSpots();
+	
+	List<ParkingEvent> findByDate(Date dateIn, Date dateOut);
 
 
 }

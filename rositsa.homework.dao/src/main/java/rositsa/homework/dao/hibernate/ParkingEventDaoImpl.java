@@ -67,5 +67,11 @@ public class ParkingEventDaoImpl extends GenericHibernateDAO<ParkingEvent, Seria
 		Query query = getSession().createQuery("FROM ParkingEvent WHERE endTime IS null AND type like 'BUS' ORDER BY id DESC");
 		return query.list();
 	}
+
+	@Override
+	public List<ParkingEvent> findByDate(Date dateIn, Date dateOut) {
+		Query query = getSession().createQuery("FROM ParkingEvent WHERE startTime <= :dateIn AND endTime >= :dateOut ORDER BY id DESC");
+		return query.list();
+	}
 	
 }
