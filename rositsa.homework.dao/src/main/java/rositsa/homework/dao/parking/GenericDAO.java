@@ -20,14 +20,47 @@ import java.io.Serializable;
  */
 public interface GenericDAO<T, PK extends Serializable> {
 
+	/**
+	 * Finds by ID
+	 * 
+	 * @param id - the id
+	 * 
+	 * @param lock - the lock
+	 * 
+	 * @return Hibernate object
+	 */
 	public T findById(PK id, boolean lock);
 
+	/**
+	 * List all
+	 * 
+	 * @return list
+	 */
 	public List<T> findAll();
 
+	/**
+	 * FInd by example
+	 * 
+	 * @param exampleInstance - example
+	 * 
+	 * @return list
+	 */
 	public List<T> findByExample(T exampleInstance);
 	
+	/**
+	 * Persist
+	 * 
+	 * @param entity - the object
+	 * 
+	 * @return object
+	 */
 	public T makePersistent(T entity);
 
+	/**
+	 * Delete object
+	 * 
+	 * @param entity - object
+	 */
 	void makeTransient(T entity);
 	
 }

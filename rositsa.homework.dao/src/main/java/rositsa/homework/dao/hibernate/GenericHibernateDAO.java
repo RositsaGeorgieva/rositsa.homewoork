@@ -22,8 +22,10 @@ import rositsa.homework.dao.parking.GenericDAO;
  * @author rosy@inerty.com
  * 
  * @since 1.0
- * @param <T>
- * @param <ID>
+ * 
+ * @param <T> Type
+ * 
+ * @param <ID> ID
  */
 
 public abstract class GenericHibernateDAO<T, ID extends Serializable> implements GenericDAO<T, ID> {

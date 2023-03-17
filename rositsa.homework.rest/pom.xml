@@ -11,12 +11,7 @@
 	<name>rositsa.homework.rest</name>
 	<description>rositsa.homework.rest</description>
 	
-	<properties>
-		<java.version>17</java.version>
-		<mysql.version>8.0.13</mysql.version>
-		<httpclient.version>4.5.5</httpclient.version>
-		<metrics.version>3.2.2</metrics.version>
-	</properties>
+	
 	
 	<dependencies>
 

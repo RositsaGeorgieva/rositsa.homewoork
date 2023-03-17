@@ -8,8 +8,7 @@ import rositsa.homework.core.ParkingEvent;
 
 
 /**
- * Business DAO operations related to the <tt>ParkingEvent</tt> entity.
- * @see rositsa.homework.core.ParkingEvent;
+ * Business DAO operations related to the ParkingEvent entity.
  * 
  * @version $ID:$
  * 
@@ -20,15 +19,17 @@ import rositsa.homework.core.ParkingEvent;
 public interface ParkingEventDao extends GenericDAO<ParkingEvent, Serializable> {
 
 	/**
+	 * Finds last parking event for plate number
 	 * 
 	 * @param plateNumber
 	 *
-	 * @return last parking event for this number
+	 * @return ParkingEvent
 	 */
 	ParkingEvent findByPlateNumber(String plateNumber);
 	
 	/**
 	 * @param plateNumber
+	 * 
 	 * @return
 	 */
 	ParkingEvent findEnteredByPlateNumber(String plateNumber);

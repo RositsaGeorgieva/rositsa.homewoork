@@ -12,9 +12,7 @@ import rositsa.homework.dao.parking.ParkingEventDao;
 
 
 /**
- * Hibernate implementation of the business DAO operations related to the <tt>PerkingEvent</tt> entity.
- * 
- * @see rositsa.homework.core.ParkingEvent;
+ * Hibernate implementation of the business DAO operations related to the ParkingEvent entity.
  * 
  * @version $ID:$
  * 

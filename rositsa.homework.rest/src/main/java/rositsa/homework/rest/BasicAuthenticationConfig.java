@@ -4,13 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
+/**
+ * 
+ * JAAS in memory based security
+ * 
+ * @author rosy
+ *
+ */
 @Configuration
 public class BasicAuthenticationConfig {
 
 	/**
-	 * @param auth
+	 * Configure auth
 	 * 
-	 * @throws Exception
+	 * @param auth - spring auth
+	 * 
+	 * @throws Exception - security
 	 */
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

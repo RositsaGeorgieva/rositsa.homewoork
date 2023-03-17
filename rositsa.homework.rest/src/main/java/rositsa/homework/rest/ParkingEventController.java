@@ -3,7 +3,6 @@ package rositsa.homework.rest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -54,6 +52,11 @@ public class ParkingEventController {
 	@Autowired
 	private ParkingEventService parkingEventService;
 	
+	/**
+	 * List all parking events
+	 * 
+	 * @return list of parkingEvents
+	 */
 	@ApiOperation(value = "List all parking events", nickname = "getAll", notes= "Get all parking events")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
 	@RequestMapping(method = RequestMethod.GET, path="/list",  produces = "application/json")
@@ -72,6 +75,12 @@ public class ParkingEventController {
 		return response;
 	}
 	
+	/**
+	 * List occupied spots at this moment
+	 * 
+	 * @return list of parkingEvents
+	 * 
+	 */
 	@ApiOperation(value = "List occupied spots NOW", nickname = "getOccupiedSpots", notes= "Get occupied spots at this moment")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
 	@RequestMapping(method = RequestMethod.GET, path="/findOccupied",  produces = "application/json")
@@ -90,6 +99,16 @@ public class ParkingEventController {
 		return response;
 	}
 	
+	/**
+	 * List parking events by date
+	 * 
+	 * @param date - observed date
+	 * 
+	 * @return list of parkingEvents
+	 * 
+	 * @throws ParseException
+	 * 
+	 */
 	@ApiOperation(value = "List parking events by date", nickname = "findByDate", notes= "Get parked vehicles by date")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
 	@RequestMapping(method = RequestMethod.GET, path="/finByDate/{date}",  produces = "application/json")
@@ -111,6 +130,11 @@ public class ParkingEventController {
 		return response;
 	}
 	
+	/**
+	 * Gets number of all occupied spots at this moment
+	 * 
+	 * @return number of spots
+	 */
 	@ApiOperation(value = "Number of occupied spots NOW", nickname = "getNumberOfOccupiedSpots", notes= "Get Number of occupied spots")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
 	@RequestMapping(method = RequestMethod.GET, path="/numberOfOccupiedSpots",  produces = "application/json")
@@ -121,6 +145,12 @@ public class ParkingEventController {
 		return parkingEventService.findOccupied().size();
 	}
 	
+	/**
+	 * Gets number of occupied by cars spots at this moment
+	 * 
+	 * @return number of spots
+	 * 
+	 */
 	@ApiOperation(value = "Number of occupied by cars spots NOW", nickname = "getNumberOfOccupiedByCarsSpots", notes= "Get Number of occupied CAR spots")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
 	@RequestMapping(method = RequestMethod.GET, path="/findOccupiedCarSpots",  produces = "application/json")
@@ -131,6 +161,12 @@ public class ParkingEventController {
 		return ParkingEventService.CAR_SPOTS - parkingEventService.findFreeCarSpots();
 	}
 	
+	/**
+	 * Gets number of occupied by busses spots at this moment
+	 * 
+	 * @return number of spots
+	 * 
+	 */
 	@ApiOperation(value = "Number of occupied by busses spots NOW", nickname = "getNumberOfOccupiedByBussesSpots", notes= "Get Number of occupied BUS spots")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ListParkingEventsResponse.class)})
 	@RequestMapping(method = RequestMethod.GET, path="/findOccupiedBusSpots",  produces = "application/json")
@@ -142,9 +178,14 @@ public class ParkingEventController {
 	}
 	
 	/**
-	 * @param type
-	 * @param plateNumber
-	 * @return
+	 * Create ParkingEvent
+	 * 
+	 * @param type - type of vehicle
+	 * 
+	 * @param plateNumber - number of vehicle
+	 * 
+	 * @return ParkingEvent
+	 * 
 	 * @throws FullParkingException
 	 */
 	@ApiOperation(value = "Enter parking - create parking event", nickname = "entering parking", notes= "Create parking event")
@@ -170,8 +211,12 @@ public class ParkingEventController {
 	}
 	
 	/**
-	 * @param plateNumber
-	 * @return
+	 * Update ParkindEvent
+	 * 
+	 * @param plateNumber - the number of vehicle
+	 * 
+	 * @return updateResponse
+	 * 
 	 * @throws BaseRestException
 	 */
 	@ApiOperation(value = "Exit parking - update parking event", nickname = "exit the parking", notes= "Update parking event with endDate")
@@ -188,18 +233,34 @@ public class ParkingEventController {
 		return new UpdateResponse(parkingEvent.getPlateNumber());
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	
+	/**
+	 * toSting
 	 */
 	@Override
 	public String toString() {
 		return "ParkingEvents Controler - Implementation of ParkingEvent REST API";
 	}
 
+	/**
+	 * set ParkingEventService
+	 * 
+	 * @param parkingEventService
+	 * 
+	 */
 	public void setParkingEventService(ParkingEventService parkingEventService) {
 		this.parkingEventService = parkingEventService;
 	}
 	
+	
+	/**
+	 * 
+	 * FullParkingException handler
+	 * 
+	 * @param e - exception
+	 * 
+	 * @return status
+	 */
 	@ExceptionHandler({FullParkingException.class})
 	public @ResponseBody Status error(FullParkingException e) {
 		Status status = new Status();

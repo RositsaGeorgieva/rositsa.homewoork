@@ -6,8 +6,7 @@ import rositsa.homework.rest.Status.ResponseTypes;
 /**
  * Base response class that contains a {@link Status}
  * 
- * * <pre>
- * {@code
+ * <pre>
  * {
  *   "status": {
  *        "code": "string",
@@ -15,7 +14,6 @@ import rositsa.homework.rest.Status.ResponseTypes;
  *        "type": "SUCCESS"
  *   }
  * }
- * 
  * </pre>
  * 
  * @version $Id:$
@@ -34,10 +32,22 @@ public abstract class BaseResponse {
 		
 	}
 	
+	/**
+	 * Costructor
+	 * 
+	 * @param code - response code
+	 * @param type - response type
+	 * @param message - response message
+	 */
 	public BaseResponse(String code, ResponseTypes type, String message) {
 		status = new Status(code, type, message);
 	}
 	
+	/**
+	 * Get status
+	 * 
+	 * @return status
+	 */
 	public Status getStatus() {
 		return status;
 	}

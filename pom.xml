@@ -5,18 +5,45 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.1.RELEASE</version>
 	</parent>
-   
 	<groupId>rositsa.homework</groupId>
 	<artifactId>rositsa.homework</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Homework - Rositsa Georgieva</name>
 	<description>Homework - Rositsa Georgieva</description>
-
+	<properties>
+		<java.version>17</java.version>
+		<mysql.version>8.0.13</mysql.version>
+	</properties>
 	<modules>
 		<module>rositsa.homework.rest</module>
 		<module>rositsa.homework.core</module>
 		<module>rositsa.homework.dao</module>
 		<module>rositsa.homework.service</module>
 	</modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.7.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<reporting>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-javadoc-plugin</artifactId>
+      <version>3.5.0</version>
+    </plugin>
+  </plugins>
+</reporting>
+
 </project>
