@@ -44,7 +44,7 @@ import rositsa.homework.service.ParkingEventService;
 public class ParkingEventController {
 
 	/** Logger */
-	private static final Logger logger = LogManager.getLogger(ParkingEventController.class);
+	private static final Logger LOGGER = LogManager.getLogger(ParkingEventController.class);
 	
 	@Autowired
 	private ParkingEventService parkingEventService;
@@ -59,7 +59,7 @@ public class ParkingEventController {
 	@RequestMapping(method = RequestMethod.GET, path="/list",  produces = "application/json")
 	public @ResponseBody ListParkingEventsResponse list() {
 		
-		logger.info("List all parking events");
+		LOGGER.info("List all parking events");
 		
 		ListParkingEventsResponse response = new ListParkingEventsResponse();
 		
@@ -83,7 +83,9 @@ public class ParkingEventController {
 	@RequestMapping(method = RequestMethod.GET, path="/findOccupied",  produces = "application/json")
 	public @ResponseBody ListParkingEventsResponse listOccupied() {
 		
-		logger.info("Get occupied spots");
+		if(LOGGER.isInfoEnabled()) {
+			LOGGER.info("Get occupied spots");
+		}
 		
 		ListParkingEventsResponse response = new ListParkingEventsResponse();
 		
@@ -111,7 +113,9 @@ public class ParkingEventController {
 	@RequestMapping(method = RequestMethod.GET, path="/finByDate/{date}",  produces = "application/json")
 	public @ResponseBody ListParkingEventsResponse findByDate(@PathVariable("date") @ApiParam(name = "date", value = "2023-03-15", required = true) String date) throws ParseException {
 		
-		logger.info("Get parked vehicle by date " + date);
+		if(LOGGER.isInfoEnabled()) {
+			LOGGER.info("Get parked vehicle by date " + date);
+		}
 		
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 		
@@ -138,8 +142,9 @@ public class ParkingEventController {
 	@RequestMapping(method = RequestMethod.GET, path="/numberOfOccupiedSpots",  produces = "application/json")
 	public @ResponseBody int numberOfOccupiedSpots() {
 		
-		logger.info("Number of occupied spots NOW");
-		
+		if(LOGGER.isInfoEnabled()) {
+			LOGGER.info("Number of occupied spots NOW");
+		}
 		return parkingEventService.findOccupied().size();
 	}
 	
@@ -154,7 +159,9 @@ public class ParkingEventController {
 	@RequestMapping(method = RequestMethod.GET, path="/findOccupiedCarSpots",  produces = "application/json")
 	public @ResponseBody int findOccupiedCarSpots() {
 		
-		logger.info("Number of occupied by cars spots NOW");
+		if(LOGGER.isInfoEnabled()) {
+			LOGGER.info("Number of occupied by cars spots NOW");
+		}
 		
 		return ParkingEventService.CAR_SPOTS - parkingEventService.findFreeCarSpots();
 	}
@@ -170,7 +177,9 @@ public class ParkingEventController {
 	@RequestMapping(method = RequestMethod.GET, path="/findOccupiedBusSpots",  produces = "application/json")
 	public @ResponseBody int findOccupiedBusSpots() {
 		
-		logger.info("Number of occupied by busses spots NOW");
+		if(LOGGER.isInfoEnabled()) {
+			LOGGER.info("Number of occupied by busses spots NOW");
+		}
 		
 		return ParkingEventService.BUS_SPOTS - parkingEventService.findFreeBusSpots();
 	}
@@ -191,8 +200,9 @@ public class ParkingEventController {
 	@RequestMapping(method = RequestMethod.POST, path="/{type}/{plateNumber}", produces = "application/json")
 	public @ResponseBody CreateResponse create(@PathVariable("type") String type, @PathVariable("plateNumber") String plateNumber) throws FullParkingException {
 
-		logger.info("Create parking event: " + plateNumber + ". Type " + type);
-		
+		if(LOGGER.isInfoEnabled()) {
+			LOGGER.info("Create parking event: " + plateNumber + ". Type " + type);
+		}
 		ParkingEvent parkingEvent = new ParkingEvent();
 		
 		parkingEvent.setPlateNumber(plateNumber);
@@ -201,7 +211,9 @@ public class ParkingEventController {
 		
 		parkingEventService.enterParking(plateNumber, type);
 		
-		logger.info("Parking event created successfully: " + parkingEvent);
+		if(LOGGER.isInfoEnabled()) {
+			LOGGER.info("Parking event created successfully: " + parkingEvent);
+		}
 		
 		CreateResponse response = new CreateResponse(plateNumber);
 		
@@ -222,8 +234,9 @@ public class ParkingEventController {
 	@RequestMapping(method = RequestMethod.PUT, path="/{plateNumber}", produces = "application/json")
 	public @ResponseBody UpdateResponse update(@PathVariable("plateNumber") String plateNumber) throws BaseRestException {
 
-		logger.info("Update parking event [plateNumber=" + plateNumber + "]");
-		
+		if(LOGGER.isInfoEnabled()) {
+			LOGGER.info("Update parking event [plateNumber=" + plateNumber + "]");
+		}
 		ParkingEvent parkingEvent = parkingEventService.get(plateNumber);
 		
 		parkingEventService.exitParking(plateNumber);
@@ -247,7 +260,9 @@ public class ParkingEventController {
 	 * 
 	 */
 	public void setParkingEventService(ParkingEventService parkingEventService) {
+		
 		this.parkingEventService = parkingEventService;
+		
 	}
 	
 	
