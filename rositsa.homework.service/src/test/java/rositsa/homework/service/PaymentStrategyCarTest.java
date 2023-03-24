@@ -57,7 +57,7 @@ public class PaymentStrategyCarTest {
 	@Test
 	public void testCarPaymentTimeNegative() {
 		double calculcate = paymentStrategy.calculcate(-2);
-		assertEquals(0, calculcate, 0);
+		assertEquals("Payments with negative value are not alowed.", 0, calculcate, 0);
 	}
 
 }

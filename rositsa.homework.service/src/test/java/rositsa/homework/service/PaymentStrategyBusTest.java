@@ -8,8 +8,6 @@ public class PaymentStrategyBusTest {
 
 	PaymentStrategy paymentStrategy = new PaymentStrategy(new BusPayment());;
 	
-	
-	
 	@Test
 	public void testBusPaymentTime0h() {
 		double calculcate = paymentStrategy.calculcate(0);
@@ -57,7 +55,7 @@ public class PaymentStrategyBusTest {
 	@Test
 	public void testBusPaymentTimeNegative() {
 		double calculcate = paymentStrategy.calculcate(-2);
-		assertEquals(0, calculcate, 0);
+		assertEquals("Payments with negative value are not alowed.", 0, calculcate, 0);
 	}
 
 }
